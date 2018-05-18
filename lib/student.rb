@@ -16,7 +16,6 @@ class Student
     DB[:conn].execute(sql, self.name, self.grade)
 
     @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
-    puts @id
 
   end
 
@@ -28,6 +27,12 @@ class Student
     new_student.grade = row[2]
     new_student                    # return the newly created instance
   end
+
+  def self.create(name:, grade:)
+   student = self.new(name, grade)
+   student.save
+   student
+ end
 
   def self.all
     # retrieve all the rows from the "Students" database
@@ -56,72 +61,6 @@ class Student
     DB[:conn].execute(sql, name).map do |row|
       self.new_from_db(row)
     end.first
-
-  end
-
-  def self.count_all_students_in_grade_9
-    sql = <<-SQL
-      SELECT *
-      FROM students
-      WHERE grade = "9"
-    SQL
-
-    DB[:conn].execute(sql).map do |row|
-      self.new_from_db(row)
-    end
-
-  end
-
-  def self.students_below_12th_grade
-    sql = <<-SQL
-      SELECT *
-      FROM students
-      WHERE grade <=  "11"
-    SQL
-
-    DB[:conn].execute(sql).map do |row|
-      self.new_from_db(row)
-    end
-  end
-
-  def self.first_X_students_in_grade_10(limit_size)
-    sql = <<-SQL
-      SELECT *
-      FROM students
-      WHERE grade =  10
-      LIMIT ?
-    SQL
-
-    DB[:conn].execute(sql, limit_size).map do |row|
-      self.new_from_db(row)
-    end
-  end
-
-  def self.first_student_in_grade_10
-    sql = <<-SQL
-      SELECT *
-      FROM students
-      WHERE grade =  10
-      LIMIT 1
-    SQL
-
-    DB[:conn].execute(sql).map do |row|
-      self.new_from_db(row)
-    end.first
-  end
-
-  def self.all_students_in_grade_X(grade)
-    sql = <<-SQL
-      SELECT *
-      FROM students
-      WHERE grade = ?
-
-    SQL
-
-    DB[:conn].execute(sql, grade).map do |row|
-      self.new_from_db(row)
-    end
-
   end
 
   def self.create_table
