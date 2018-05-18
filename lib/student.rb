@@ -31,11 +31,10 @@ class Student
     new_student                    # return the newly created instance
   end
 
-  def self.create(name:, grade:)
-   student = self.new(name, grade)
-   student.save
-   #student
- end
+  def self.create(name, grade)
+    student = Student.new(name, grade)
+    student.save
+  end
 
  def update
     sql = "UPDATE students SET name = ?, grade = ? WHERE id = ?"
