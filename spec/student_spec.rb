@@ -56,7 +56,7 @@ describe "Student" do
       expect(sarah.id).to eq(1)
     end
 
-    xit 'updates a record if called on an object that is already persisted' do
+    it 'updates a record if called on an object that is already persisted' do
       jane = Student.new("Jane", "11th")
       jane.save
       jane_id = jane.id
@@ -98,7 +98,7 @@ describe "Student" do
   end
 
   describe '#update' do
-    xit 'updates the record associated with a given instance' do
+    it 'updates the record associated with a given instance' do
       josh.save
       josh.name = "Josh Jr."
       josh.update
