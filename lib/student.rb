@@ -27,7 +27,7 @@ class Student
     id = row[0]
     name =  row[1]
     grade = row[2]
-    new_student =   student.new(id,name,grade)                   # return the newly created instance
+    new_student =   student.new(id, name, grade)                   # return the newly created instance
   end
 
   def self.create(name, grade)
