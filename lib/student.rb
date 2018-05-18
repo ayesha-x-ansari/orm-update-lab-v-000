@@ -7,6 +7,19 @@ class Student
     @grade = grade
   end
 
+  def save
+    sql = <<- SQL
+      INSERT INTO songs (name, grade) 
+      VALUES (?, ?)
+    SQL
+ 
+    DB[:conn].execute(sql, self.name, self.grade)
+ 
+    @id = DB[:conn].execute("SELECT last_insert_rowid() FROM songs")[0][0]
+ 
+  end
+
+
   def self.new_from_db(row)
     new_student = self.new
     new_student.id = row[0]
