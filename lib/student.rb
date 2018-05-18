@@ -1,6 +1,8 @@
 #require_relative "../config/environment.rb"
 class Student
+
   attr_accessor  :name, :grade, :id
+
   def initialize(id = nil, name, grade)
     @id = id
     @name = name
@@ -22,7 +24,6 @@ class Student
     end
   end
 
-
   def self.new_from_db(row)
     id = row[0]
     name =  row[1]
@@ -38,21 +39,6 @@ class Student
  def update
     sql = "UPDATE students SET name = ?, grade = ? WHERE id = ?"
     DB[:conn].execute(sql, self.name, self.grade, self.id)
-  end
-
-
-  def self.all
-    # retrieve all the rows from the "Students" database
-    # remember each row should be a new instance of the Student class
-    sql = <<-SQL
-      SELECT *
-      FROM students
-    SQL
-
-    DB[:conn].execute(sql).map do |row|
-      self.new_from_db(row)
-    end
-
   end
 
   def self.find_by_name(name)
